@@ -28,7 +28,21 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+#    - name: Build with Gradle
+#      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+#      with:
+#        arguments: build
+    - name: Build
+      run: mvn --batch-mode -DskipTests package
+
+    - name: Test
+      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+
+    - name: Report
+      uses: dorny/test-reporter@v1
+      if: always()
       with:
-        arguments: build
+        name: Maven Tests
+        path: target/surefire-reports/*.xml
+        reporter: java-junit
+        fail-on-error: true
