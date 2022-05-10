@@ -33,8 +33,8 @@ jobs:
       with:
         arguments: build
     - name: Unit Test
-        run: ./gradlew testDebugUnitTest
-        continue-on-error: true # IMPORTANT: allow pipeline to continue to Android Test Report step
+      run: ./gradlew testDebugUnitTest
+      continue-on-error: true
 
     - name: Android Test Report
       uses: asadmansr/android-test-report-action@v1.2.0
