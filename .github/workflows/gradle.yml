@@ -28,21 +28,13 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-#    - name: Build with Gradle
-#      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-#      with:
-#        arguments: build
-    - name: Build
-      run: mvn --batch-mode -DskipTests package
-
-    - name: Test
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
-
-    - name: Report
-      uses: dorny/test-reporter@v1
-      if: always()
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        name: Maven Tests
-        path: target/surefire-reports/*.xml
-        reporter: java-junit
-        fail-on-error: true
+        arguments: build
+    - name: Unit Test
+        run: ./gradlew testDebugUnitTest
+        continue-on-error: true # IMPORTANT: allow pipeline to continue to Android Test Report step
+
+    - name: Android Test Report
+      uses: asadmansr/android-test-report-action@v1.2.0

@@ -15,15 +15,39 @@
  */
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager;
+import org.junit.Before;
+import org.junit.Test;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import static org.junit.Assert.*;
+
+import android.content.Context;
+import android.test.mock.MockContext;
+
+import androidx.test.core.app.ApplicationProvider;
+
+import java.util.List;
+
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
+public class ApplicationTest {
+    PersistentExpenseManager expenseManager;
+
+    @Before
+    public void createExpenseManager(){
+        Context context = ApplicationProvider.getApplicationContext();
+        expenseManager = new PersistentExpenseManager(context);
+    }
+
+    @Test
+    public void testApp() {
+        expenseManager.addAccount("12345A","TestBank","TestHolder",1000);
+//        Account account = expenseManager.getAccountsDAO().getAccount("12345A");
+        List<String> accountNos = expenseManager.getAccountNumbersList();
+        assertTrue(accountNos.contains("12345"));
     }
 }
