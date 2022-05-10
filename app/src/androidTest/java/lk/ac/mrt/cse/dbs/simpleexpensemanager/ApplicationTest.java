@@ -48,6 +48,6 @@ public class ApplicationTest {
         expenseManager.addAccount("12345A","TestBank","TestHolder",1000);
 //        Account account = expenseManager.getAccountsDAO().getAccount("12345A");
         List<String> accountNos = expenseManager.getAccountNumbersList();
-        assertTrue(accountNos.contains("12345"));
+        assertTrue(accountNos.contains("12345A"));
     }
 }
